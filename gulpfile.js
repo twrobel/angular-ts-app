@@ -71,14 +71,6 @@ gulp.task('styles', ['clean-styles'], function() {
     .pipe(gulp.dest(config.temp));
 });
 
-gulp.task('typescript', function () {
-    return gulp.src(config.ts)
-      .pipe($.typescript({
-        target:'es5'
-        }))
-      .js
-      .pipe(gulp.dest(config.clientApp));
-});
 /**
  * Copy fonts
  * @return {Stream}
@@ -106,9 +98,7 @@ gulp.task('images', ['clean-images'], function() {
 
 gulp.task('less-watcher', function() {
   gulp.watch([config.less], ['styles']);
-  
 });
-
 
 /**
  * Create $templateCache from the html templates
@@ -505,13 +495,9 @@ function startBrowserSync(isDev, specRunner) {
   if (isDev) {
     gulp.watch([config.less], ['styles'])
       .on('change', changeEvent);
-    gulp.watch([config.ts], ['typescript'])
-    .on('change', changeEvent);
   } else {
     gulp.watch([config.less, config.js, config.html], ['browserSyncReload'])
       .on('change', changeEvent);
-    gulp.watch([config.ts], ['typescript'])
-    .on('change', changeEvent);
   }
 
   var options = {
